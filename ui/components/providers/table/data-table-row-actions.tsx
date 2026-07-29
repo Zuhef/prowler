@@ -221,7 +221,13 @@ function OrgGroupDropdownActions({
         open={isDeleteOrgOpen}
         onOpenChange={setIsDeleteOrgOpen}
         title="Are you absolutely sure?"
-        description={`This action cannot be undone. This will permanently delete this ${entityLabel} and all associated data.`}
+        description={`This action cannot be undone. This will permanently delete this ${entityLabel}${
+          rowData.providerCount > 0
+            ? ` and cascade to its ${rowData.providerCount} ${
+                rowData.providerCount === 1 ? "provider" : "providers"
+              }`
+            : ""
+        }.`}
       >
         <DeleteOrganizationForm
           id={rowData.id}
@@ -229,6 +235,7 @@ function OrgGroupDropdownActions({
           variant={rowData.groupKind}
           orgType={rowData.orgType}
           kind={rowData.kind}
+          providerCount={rowData.providerCount}
           setIsOpen={setIsDeleteOrgOpen}
         />
       </Modal>
